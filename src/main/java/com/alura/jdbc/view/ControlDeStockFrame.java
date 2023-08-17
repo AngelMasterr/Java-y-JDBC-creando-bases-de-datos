@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.Optional;
 
 import javax.swing.JButton;
@@ -42,6 +43,7 @@ public class ControlDeStockFrame extends JFrame {
 
         configurarCamposDelFormulario(container);
 
+        
         configurarTablaDeContenido(container);
 
         configurarAccionesDelFormulario();
@@ -208,12 +210,15 @@ public class ControlDeStockFrame extends JFrame {
     }
 
     private void cargarTabla() {
-        var productos = this.productoController.listar();
-
+    	try {
+    		var productos = this.productoController.listar();
+    	} catch (SQLException e) {
+			throw new RuntimeException(e);		
+		}
         try {
             // TODO
-            // productos.forEach(producto -> modelo.addRow(new Object[] { "id", "nombre",
-            // "descripcion" }));
+            // productos.forEach(Product -> modelo.addRow(new Object[] { "id", "nombre",
+            // "Description" }));
         } catch (Exception e) {
             throw e;
         }
