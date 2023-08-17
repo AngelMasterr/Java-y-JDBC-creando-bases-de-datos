@@ -27,8 +27,8 @@ public class ProductoController {
 		
 		java.sql.Statement statement = con.createStatement();
 		
-		boolean result = statement.execute("SELECT ID, NOMBRE, DESCRIPCION, CANTIDAD FROM PRODUCTO");
-		
+		boolean result = statement.execute("SELECT ID, NOMBRE, DESCRIPCION, CANTIDAD FROM PRODUCTOS");
+			
 		System.out.println(result);
 		
 		con.close();
