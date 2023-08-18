@@ -10,7 +10,7 @@ public class PruebaConexion {
         Connection con = DriverManager.getConnection(
                 "jdbc:mysql://localhost/control_de_stock?useTimeZone=true&serverTimeZone=UTC",
                 "root",
-                "root1234");
+                "Holocausto3@");
 
         System.out.println("Cerrando la conexión");
 
