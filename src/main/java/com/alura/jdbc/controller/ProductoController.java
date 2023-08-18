@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.print.DocFlavor.STRING;
 
+import com.alura.jdbc.factory.ConnectionFactory;
 import com.mysql.cj.jdbc.JdbcConnection;
 import com.mysql.cj.xdevapi.Statement;
 
@@ -25,14 +26,12 @@ public class ProductoController {
 	}
 
 	public List<Map<String, String>> listar() throws SQLException {
-		Connection con = DriverManager.getConnection(
-				"jdbc:mysql://localhost/control_de_stock?useTimeZone=true&serverTimeZone=UTC", 
-				"root", 
-				"Holocausto3@");
+		
+		Connection con = new ConnectionFactory().recuperaConexion();
 		
 		java.sql.Statement statement = con.createStatement();
 		
-		boolean result = statement.execute("SELECT ID, NOMBRE, DESCRIPCION, CANTIDAD FROM PRODUCTOS");
+		statement.execute("SELECT ID, NOMBRE, DESCRIPCION, CANTIDAD FROM PRODUCTOS");
 			
 		ResultSet resultSet = statement.getResultSet();
 		
