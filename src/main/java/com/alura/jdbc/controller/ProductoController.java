@@ -52,8 +52,15 @@ public class ProductoController {
 		return resultado;
 	}
 
-    public void guardar(Object producto) {
-		// TODO
+    public void guardar(Map<String, String> producto) {
+		Connection con = new ConnectionFactory().recuperaConexion();
+		
+		java.sql.Statement statement = con.createStatement();
+		statement.execute("INSERT INTO PRODCUTO(nombre, descripcion, cantidad)"
+				+ "VALUES('" +producto.get("nombre") + "','"
+				+ producto.get("descripcion") + "',"
+				+ producto.get("cantidad"));
+		
 	}
 
 }
