@@ -17,12 +17,29 @@ import com.mysql.cj.xdevapi.Statement;
 
 public class ProductoController {
 
-	public void modificar(String nombre, String descripcion, Integer id) {
-		// TODO
+	public int modificar(String nombre, String descripcion, Integer id, Integer cantidad) throws SQLException {
+		
+		Connection con = new ConnectionFactory().recuperaConexion();
+		java.sql.Statement statement = con.createStatement();
+		
+		statement.execute("UPDATE PRODUCTOS SET "
+			    + " NOMBRE = '" + nombre + "'"
+			    + ", DESCRIPCION = '" + descripcion + "'"
+			    + ", CANTIDAD = " + cantidad
+			    + " WHERE ID = " + id);
+				 		
+		return statement.getUpdateCount();
 	}
 
-	public void eliminar(Integer id) {
-		// TODO
+	public int eliminar(Integer id) throws SQLException {
+		
+		Connection con = new ConnectionFactory().recuperaConexion();
+		java.sql.Statement statement = con.createStatement();
+		
+		statement.execute("DELETE FROM PRODUCTOS WHERE ID = " + id);
+				
+		return statement.getUpdateCount();		 
+		
 	}
 
 	public List<Map<String, String>> listar() throws SQLException {
@@ -63,7 +80,7 @@ public class ProductoController {
 				+ producto.get("cantidad") + ")", java.sql.Statement.RETURN_GENERATED_KEYS );
 		
 		ResultSet resultSet = statement.getGeneratedKeys();		
-		
+				
 		while (resultSet.next()) {
 			System.out.println(String.format(
 					"fue insertado el producto del id %d", resultSet.getInt(1)));			
