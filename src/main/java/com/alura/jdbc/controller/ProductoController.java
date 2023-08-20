@@ -28,6 +28,7 @@ public class ProductoController {
 			    + ", CANTIDAD = " + cantidad
 			    + " WHERE ID = " + id);
 				 		
+		System.out.println(String.format("%s, %s, %d, %d", nombre, descripcion, cantidad, id ));
 		return statement.getUpdateCount();
 	}
 
