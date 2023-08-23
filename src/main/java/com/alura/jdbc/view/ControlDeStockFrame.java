@@ -189,15 +189,16 @@ public class ControlDeStockFrame extends JFrame {
                 	
                 	tabla.editCellAt(tabla.getSelectedRow(), tabla.getSelectedColumn());
                     tabla.getEditorComponent().requestFocus();
-                	
-                	Integer id = Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 0).toString());
-                    String nombre = (String) modelo.getValueAt(tabla.getSelectedRow(), 1);
-                    String descripcion = (String) modelo.getValueAt(tabla.getSelectedRow(), 2);
-                    Integer cantidad = Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 3).toString());
+                    
+                    var producto = new Producto (
+                    		Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 0).toString()),
+                    		(String) modelo.getValueAt(tabla.getSelectedRow(), 1),
+                    		(String) modelo.getValueAt(tabla.getSelectedRow(), 2),
+                    		Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 3).toString()));   
                     
                     int filasModificadas; 
                     try {
-                    	filasModificadas = this.productoController.modificar(nombre, descripcion, id, cantidad);
+                    	filasModificadas = this.productoController.modificar(producto);
 					} catch (SQLException e) {
 						throw new RuntimeException(e);
 					}
@@ -216,11 +217,7 @@ public class ControlDeStockFrame extends JFrame {
                     Integer id = Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 0).toString());
                     int cantidadEliminada;
                     
-                    try {
-                    	cantidadEliminada = this.productoController.eliminar(id);
-					} catch (SQLException e) {
-						throw new RuntimeException(e);
-					}
+                    cantidadEliminada = this.productoController.eliminar(id);
 
                     modelo.removeRow(tabla.getSelectedRow());
 

@@ -22,6 +22,7 @@ public class ProductoDAO {
 
 	// Metodo guardar producto
 	public void guardarProducto(Producto producto) {
+		final Connection con = new ConnectionFactory().recuperaConexion();
 		try (con) {
 			final PreparedStatement statement = con.prepareStatement(
 					"INSERT INTO PRODUCTOS (nombre, descripcion, cantidad) VALUES(?, ?, ?)",
@@ -91,6 +92,31 @@ public class ProductoDAO {
 				statement.execute();	
 				return statement.getUpdateCount();
 			}										 
+		}
+		catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	// Metodo para modificar la fila seleccionada
+	public int modificar(Producto producto) {
+		
+		final Connection con = new ConnectionFactory().recuperaConexion();
+		try (con) {
+
+			final PreparedStatement statement = con.prepareStatement(
+					"UPDATE PRODUCTOS SET " + " NOMBRE = ?," + " DESCRIPCION = ?," + " CANTIDAD = ?" + " WHERE ID = ?");
+			try (statement) {
+
+				statement.setString(1, producto.getNombre());
+				statement.setString(2, producto.getDescripcion());
+				statement.setInt(3, producto.getCantidad());
+				statement.setInt(4, producto.getId());
+				statement.execute();
+
+				System.out.println(String.format("%s, %s, %d, %d", producto.getNombre(), producto.getDescripcion(), producto.getCantidad(), producto.getId()));
+				return statement.getUpdateCount();
+			}			
 		}
 		catch (SQLException e) {
 			throw new RuntimeException(e);
