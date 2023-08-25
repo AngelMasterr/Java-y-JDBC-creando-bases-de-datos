@@ -40,6 +40,12 @@ public class Producto {
 		this.cantidad = cantidad;
 	}
 	
+	public Producto(int id, String nombre, int cantidad) {
+		this.id = id;
+		this.nombre = nombre;
+		this.cantidad = cantidad;
+	}
+	
 	public int getCantidadId() {
 		return this.categoriaId;
 	}

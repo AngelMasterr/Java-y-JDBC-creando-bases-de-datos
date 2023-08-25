@@ -18,13 +18,11 @@ public class ReporteFrame extends JFrame {
 	private DefaultTableModel modelo;
 
 	private CategoriaController categoriaController;
-	private ProductoController productoControler;
 
 	public ReporteFrame(ControlDeStockFrame controlDeStockFrame) {
 		super("Reporte de produtos del stock");
 
 		this.categoriaController = new CategoriaController();
-		this.productoControler = new ProductoController();
 
 		Container container = getContentPane();
 		setLayout(null);
@@ -52,7 +50,7 @@ public class ReporteFrame extends JFrame {
 		contenido.forEach(categoria -> {
 			modelo.addRow(new Object[] { categoria });
 
-			var productos = this.productoControler.listar(categoria);
+			var productos = categoria.getProductos();
 
 			productos.forEach(
 					producto -> modelo.addRow(new Object[] { "", producto.getNombre(), producto.getCantidad() }));
