@@ -7,47 +7,57 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import com.alura.jdbc.controller.CategoriaController;
+import com.alura.jdbc.controller.ProductoController;
+import com.alura.jdbc.modelo.Producto;
 
 public class ReporteFrame extends JFrame {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private JTable tablaReporte;
-    private DefaultTableModel modelo;
+	private JTable tablaReporte;
+	private DefaultTableModel modelo;
 
-    private CategoriaController categoriaController;
+	private CategoriaController categoriaController;
+	private ProductoController productoControler;
 
-    public ReporteFrame(ControlDeStockFrame controlDeStockFrame) {
-        super("Reporte de produtos del stock");
+	public ReporteFrame(ControlDeStockFrame controlDeStockFrame) {
+		super("Reporte de produtos del stock");
 
-        this.categoriaController = new CategoriaController();
+		this.categoriaController = new CategoriaController();
+		this.productoControler = new ProductoController();
 
-        Container container = getContentPane();
-        setLayout(null);
+		Container container = getContentPane();
+		setLayout(null);
 
-        tablaReporte = new JTable();
-        tablaReporte.setBounds(0, 0, 600, 400);
-        container.add(tablaReporte);
+		tablaReporte = new JTable();
+		tablaReporte.setBounds(0, 0, 600, 400);
+		container.add(tablaReporte);
 
-        modelo = (DefaultTableModel) tablaReporte.getModel();
-        modelo.addColumn("");
-        modelo.addColumn("");
-        modelo.addColumn("");
-        modelo.addColumn("");
+		modelo = (DefaultTableModel) tablaReporte.getModel();
+		modelo.addColumn("");
+		modelo.addColumn("");
+		modelo.addColumn("");
+		modelo.addColumn("");
 
-        cargaReporte();
+		cargaReporte();
 
-        setSize(600, 400);
-        setVisible(true);
-        setLocationRelativeTo(controlDeStockFrame);
-    }
+		setSize(600, 400);
+		setVisible(true);
+		setLocationRelativeTo(controlDeStockFrame);
+	}
 
-    private void cargaReporte() {
-        var contenido = categoriaController.cargaReporte();
-        
-        // TODO
-        contenido.forEach(fila -> modelo
-                .addRow(new Object[] {}));
-    }
+	private void cargaReporte() {
+		var contenido = categoriaController.cargaReporte();
+
+		contenido.forEach(categoria -> {
+			modelo.addRow(new Object[] { categoria });
+
+			var productos = this.productoControler.listar(categoria);
+
+			productos.forEach(
+					producto -> modelo.addRow(new Object[] { "", producto.getNombre(), producto.getCantidad() }));
+		});
+
+	}
 
 }
